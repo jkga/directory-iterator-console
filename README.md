@@ -7,27 +7,30 @@ Iterate over directories and list all files using php-CLI. This is currently tes
 3. Navigate to your php installation folder
 4. Run the directory-cli.php    
 
-**In Windows**
+**Windows**   
+Please enclose with **"  "** all parameters containing special or whitespace character.This must be applied also in multi-valued parameters.
+
 ```php
-C:\xampp\php>php -f C:\\xampp\htdocs\directory-iterator-console\directory-cli.php C:\\xampp "C:\\xampp\xampp_stop.exe,C:\\xampp\xampp_start.exe" "C:\\xampp\php,C:\\xampp\perl"
+C:\xampp\php>php -f C:\\xampp\htdocs\directory-iterator-console\directory-cli.php C:\\xampp "xampp_stop.exe,xampp_start.exe" "C:\\xampp\php,C:\\xampp\perl"
 ```
 
-**Parameters**   
-* PHP script  
+
+**PHP script** 
 
     	C:\\xampp\htdocs\directory-iterator-console\directory-cli.php
 
-* Path
+**Path**
 
     	C:\\xampp  
 
 
-* Ignore Files
+**Ignored Files**   
+This will ignore all files containing these filenames
 
-    	"C:\\xampp\xampp_stop.exe,C:\\xampp\xampp_start.exe"
+    	"xampp_stop.exe,xampp_start.exe"
 
 
-* Ignore Directories
+**Ignored Directories**
 
-    	C:\\xampp\php,C:\\xampp\perl
+    	"C:\\xampp\php,C:\\xampp\perl"
 
