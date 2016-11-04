@@ -10,15 +10,18 @@ class CustomDirectoryIterator
 	{
 		#settings
 		$this->autorun=isset($init['autorun'])?$init['autorun']:false;
+		$this->show_status=isset($init['status'])?$init['status']:false;
+		$this->show_display=isset($init['display'])?$init['display']:false;
 		$this->show_hidden=isset($init['hidden_directories'])?$init['hidden_directories']:false;
+		$this->real_time=isset($init['real_time'])?$init['real_time']:false;
+		$this->loading_bar=isset($init['loading_bar'])?$init['loading_bar']:false;
 		$this->path=@$init['path'];
 
 		#array exluded files
 		$this->excluded_files=split(',', @$init['excluded_files']);
 		#excluded input directory
 		$this->excluded_input_directory=split(',',@$init['excluded_directories']);
-		$this->real_time=isset($init['real_time'])?$init['real_time']:false;
-		$this->loading_bar=isset($init['loading_bar'])?$init['loading_bar']:false;
+
 
 		#parsed excluded directory
 		$this->excluded_directory=[];
@@ -81,6 +84,8 @@ class CustomDirectoryIterator
 
 		#auto run iterate
 		if($this->autorun) self::iterate();
+		if($this->show_status) self::status();
+		if($this->show_display) self::display();
 	}
 
 
@@ -147,6 +152,8 @@ class CustomDirectoryIterator
 	}
 
 	function display(){
+		#break
+		echo "\r\n";
 		#display all parsed directory
 		foreach ($this->parsed_directory as  $key=>$value) {
 			echo ($value->getPathName()."\r\n");

@@ -17,14 +17,13 @@ $init=[
 'excluded_directories'=>@$argv[3],
 'hidden_directories'=>false,
 'real_time'=>true,
-'loading_bar'=>true
+'loading_bar'=>true,
+'status'=>true
 ];
 
 #create new object based from given inputs
 $a=new CustomDirectoryIterator($init);
 
-#display results
-$a->status();
 
 
 ?>
