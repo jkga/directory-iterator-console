@@ -9,6 +9,7 @@ class CustomDirectoryIterator
 	function __construct($init=[])
 	{
 		#settings
+		$this->autorun=isset($init['autorun'])?$init['autorun']:false;
 		$this->show_hidden=isset($init['hidden_directories'])?$init['hidden_directories']:false;
 		$this->path=@$init['path'];
 
@@ -77,6 +78,9 @@ class CustomDirectoryIterator
 				}
 			   
 		});
+
+		#auto run iterate
+		if($this->autorun) self::iterate();
 	}
 
 
@@ -113,7 +117,6 @@ class CustomDirectoryIterator
 	*return int
 	*/
 	function absoluteDirectory(){
-
 		for ($i=0; $i <count($this->excluded_input_directory) ; $i++) { 
 			#use backslash for windows
 			array_push($this->excluded_directory, $this->path."\\".$this->excluded_input_directory[$i]); 
@@ -142,8 +145,6 @@ class CustomDirectoryIterator
 		#convert filename to sha1
 		return sha1($file_name);
 	}
-
-
 
 	function display(){
 		#display all parsed directory

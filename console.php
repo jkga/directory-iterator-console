@@ -11,19 +11,20 @@ if(!isset($argv)) exit;
 #settings
 
 $init=[
+'autorun'=>true,
 'path'=>@$argv[1],
 'excluded_files'=>@$argv[2],
 'excluded_directories'=>@$argv[3],
 'hidden_directories'=>false,
-'real_time'=>false,
+'real_time'=>true,
 'loading_bar'=>true
 ];
 
 #create new object based from given inputs
 $a=new CustomDirectoryIterator($init);
 
-#display results and show current status in Real Time
-$a->iterate()->status();
+#display results
+$a->status();
 
 
 ?>
