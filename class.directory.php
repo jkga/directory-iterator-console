@@ -1,5 +1,4 @@
 <?php
-
 /**
 * 
 */
@@ -9,16 +8,19 @@ class CustomDirectoryIterator
 	
 	function __construct($path,$excluded_files='',$excluded_directory='')
 	{
-		#path
+		//path
 		$this->path=$path;
-		#array exluded files
+		//array exluded files
 		$this->excluded_files=split(',', $excluded_files);
-		#excluded input directory
+		//excluded input directory
 		$this->excluded_input_directory=split(',',$excluded_directory);
 
-		#parsed excluded directory
+		//parsed excluded directory
 		$this->excluded_directory=[];
 		self::absoluteDirectory();
+
+		//parsed directories
+		$this->parsed_directory=[];
 
 
 		//status section
@@ -33,12 +35,7 @@ class CustomDirectoryIterator
 		
 		//get all files directory names
 		$this->directory= new RecursiveDirectoryIterator($this->path,RecursiveDirectoryIterator::SKIP_DOTS);
-		
-		//example result
 
-		#foreach ($this->iterator as $key => $value) {
-		#	var_dump($value);
-		#};
 
 		$this->iterator= new RecursiveCallbackFilterIterator($this->directory, function ($current, $key, $iterator) {
 				
@@ -81,14 +78,11 @@ class CustomDirectoryIterator
 	function iterate(){
 		
 		foreach (new RecursiveIteratorIterator($this->iterator) as  $value) {
-			echo ($value->getPathName())."\t".self::hash_file($value->getFileName())."\r\n";
-
+			//push to parsed directory
+			array_push($this->parsed_directory, $value);
 		}
 
-		return $this;
-
-		
-		
+		return $this;		
 	}
 
 	/**
@@ -102,7 +96,7 @@ class CustomDirectoryIterator
 	function absoluteDirectory(){
 
 		for ($i=0; $i <count($this->excluded_input_directory) ; $i++) { 
-			#use backslash for windows
+			//use backslash for windows
 			array_push($this->excluded_directory, $this->path."\\".$this->excluded_input_directory[$i]); 
 
 		}
@@ -118,7 +112,6 @@ class CustomDirectoryIterator
 		//return 0 if it exist | 1 if not
 		// if(IgnoreDirectories($directoryName)) return 1
 		return (getType(array_search($fileName, $this->excluded_files))==='integer')?0:1;
-	
 	}
 
 	function hash_file($file_name){
@@ -127,17 +120,6 @@ class CustomDirectoryIterator
 	}
 
 	function status(){
-		#echo $this->count_directory;
-		#echo $this->count;
-		#echo $this->count_directory_ignored;
-
-		#foreach ($this->directory_ignored as $key => $value) {
-			
-		#	echo ($value->getSubPathName())."\r\n";
-		#}
-
-		//return count
-
 		$data=<<<EOD
 
 
@@ -146,13 +128,22 @@ Ignored Directories:\t$this->count_directory_ignored
 Ignored Files:\t\t$this->count_files_ignored
 
 EOD;
-
-echo $data;
+		//return status
+		echo $data;
 		
 		return $this;
 	}
 
 
+
+	function display(){
+		//display all parsed directory
+		foreach ($this->parsed_directory as  $key=>$value) {
+			echo ($value->getPathName()."\r\n");
+		}
+
+		return $this;
+	}
 
 	 
 }
