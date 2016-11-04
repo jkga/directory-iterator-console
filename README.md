@@ -11,13 +11,13 @@ Iterate over directories and list all files using php-CLI. This is currently tes
 Please enclose with **"  "** all parameters containing special or whitespace character.This must be applied also in multi-valued parameters.
 
 ```php
-C:\xampp\php>php -f C:\\xampp\htdocs\directory-iterator-console\directory-cli.php C:\\xampp "xampp_stop.exe,xampp_start.exe" "php,perl"
+C:\xampp\php>php -f C:\\xampp\htdocs\directory-iterator-console\console.php C:\\xampp "xampp_stop.exe,xampp_start.exe" "php,perl"
 ```
 
 
 **PHP script** 
 
-    	C:\\xampp\htdocs\directory-iterator-console\directory-cli.php
+    	C:\\xampp\htdocs\directory-iterator-console\console.php
 
 **Path**
 
