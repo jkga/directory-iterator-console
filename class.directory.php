@@ -6,14 +6,18 @@ class CustomDirectoryIterator
 {
 
 	
-	function __construct($path,$excluded_files='',$excluded_directory='')
+	function __construct($init=[])
 	{
-		#path
-		$this->path=$path;
+		#settings
+		$this->show_hidden=isset($init['hidden_directories'])?$init['hidden_directories']:false;
+		$this->path=@$init['path'];
+
 		#array exluded files
-		$this->excluded_files=split(',', $excluded_files);
+		$this->excluded_files=split(',', @$init['excluded_files']);
 		#excluded input directory
-		$this->excluded_input_directory=split(',',$excluded_directory);
+		$this->excluded_input_directory=split(',',@$init['excluded_directories']);
+		$this->real_time=isset($init['real_time'])?$init['real_time']:false;
+		$this->loading_bar=isset($init['loading_bar'])?$init['loading_bar']:false;
 
 		#parsed excluded directory
 		$this->excluded_directory=[];
@@ -45,6 +49,8 @@ class CustomDirectoryIterator
 				#use relative path to exclude subdirectories 
 			   if ($iterator->hasChildren()) {
 					if(self::IgnoreDirectories($iterator->getPathName())){
+						#ignore hidden directories
+						if(self::IgnoreHiddenDirectories($iterator->getFileName())) return false;
 			   			#get directory count
 			   			$this->count_directory++;
 			   			return true;
@@ -74,12 +80,12 @@ class CustomDirectoryIterator
 	}
 
 
-	function iterate($real_time=0,$loading_bar=0){
+	function iterate(){
 		
 		#if not realtime,we may show loading status
 		#this must be use only when displaying through console
-		if($loading_bar){
-			echo ("\r\n[Loading . . .Please wait]")."\r\n";
+		if($this->loading_bar){
+			echo ("\r\n[Loading . . .Please wait]")."\r\n\n";
 		}
 
 		foreach (new RecursiveIteratorIterator($this->iterator) as  $value) {
@@ -87,7 +93,7 @@ class CustomDirectoryIterator
 			array_push($this->parsed_directory, $value);
 
 			#if realtime display it during iteration process.By using the real_time parameter you may not use the display() funtion
-			if($real_time){
+			if($this->real_time){
 				echo ($value->getPathName()."\r\n");
 			}
 		}
@@ -127,6 +133,11 @@ class CustomDirectoryIterator
 		return (getType(array_search($fileName, $this->excluded_files))==='integer')?0:1;
 	}
 
+	function IgnoreHiddenDirectories($fileName){
+		if($this->show_hidden===true) return false;
+		if(substr($fileName,0,1)) return true;
+	}
+
 	function hash_file($file_name){
 		#convert filename to sha1
 		return sha1($file_name);
@@ -153,6 +164,7 @@ class CustomDirectoryIterator
 
 
 Total file parsed:\t$this->count
+Total Directories:\t$this->count_directory
 Ignored Directories:\t$this->count_directory_ignored
 Ignored Files:\t\t$this->count_files_ignored
 Script executed in : \t$this->execution_date
