@@ -13,8 +13,13 @@ class CustomDirectoryIterator
 		$this->path=$path;
 		#array exluded files
 		$this->excluded_files=split(',', $excluded_files);
-		#excluded directory
-		$this->excluded_directory=split(',',$excluded_directory);
+		#excluded input directory
+		$this->excluded_input_directory=split(',',$excluded_directory);
+
+		#parsed excluded directory
+		$this->excluded_directory=[];
+		self::absoluteDirectory();
+
 
 		//status section
 		$this->count=0;
@@ -39,24 +44,18 @@ class CustomDirectoryIterator
 				
 				//iterate inside folder but exclude the directories
 				//use relative path to exclude subdirectories 
-			   if ($iterator->hasChildren()&&self::IgnoreDirectories($iterator->getPathName())) {
+			   if ($iterator->hasChildren()) {
+					if(self::IgnoreDirectories($iterator->getPathName())){
 			   			//get directory count
 			   			$this->count_directory++;
-			   			return true;		
-			   }else{
+			   			return true;
+			   		}else{
 
-			   		//count directory that has been removed
-			   		if(!empty($iterator->getSubPathName())){
-			   			
-			   			
-			   			#all that contains \
-						if(strpos($iterator->getSubPathName(), '\\')!=false){
-							$this->count_directory_ignored++;
-							array_push($this->directory_ignored, $iterator);	
-						}
+			   			$this->count_directory_ignored++;
+						array_push($this->directory_ignored, $iterator);	
 
-			   			
 			   		}
+
 			   }
 
 			   if(!$iterator->isDir()&&self::IgnoreFiles($iterator->getFileName())){
@@ -90,6 +89,23 @@ class CustomDirectoryIterator
 
 		
 		
+	}
+
+	/**
+	*absoluteDirectory
+	*add path at the beginning
+	*ex. PATH : C:\\xampp
+	*ex. DIR  : php\bin
+	*aboslute dir : C:\\xampp\php\bin
+	*return int
+	*/
+	function absoluteDirectory(){
+
+		for ($i=0; $i <count($this->excluded_input_directory) ; $i++) { 
+			#use backslash for windows
+			array_push($this->excluded_directory, $this->path."\\".$this->excluded_input_directory[$i]); 
+
+		}
 	}
 
 	function IgnoreDirectories($directoryName){
