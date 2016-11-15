@@ -36,3 +36,7 @@ For example, directories below will be converted to C:\\xampp\php and C:\\xampp\
 
     	"php,perl"
 
+### Sample Screenshot
+
+![Temporary logo](https://lh3.googleusercontent.com/MmTERsItlnF_x4zczRTvToZG0LB5VjZgohwvdKe9nsqi9HHg94c8WSi4wWIIvuec0ZXR2sunMAccB_2NWLxlz1jnXUc3CXBNunj7mf1WK58jF2ooKKlW1fgATYPpCtX4ShRcnbe66-vHuogoBmNCmXxtX_Nzalbfb06Ui_bR4Cl3xrVBGscYTlRtrwkh5uiwqwVsezj2cpWqtD16peQxSY28iMEpPBbYu86NDeNY9WcU1onpmtAf_c1w3qW8SIcnnihHt4zeDbZtjeTYZsnpww-_IClyqdC8UGdcwVoF-eUgzxN3OilRRAzDzHRQ8bOzPEv6pgXYHgroSX1IMv6qZcUeIihNEbsP-bNmGMK3Ht0BMuxjVpEDlLVSSmmLA_EXE47LFtE2WTCHzyavpjK_PxwUGIxChbkjKzedBQFDcYJVWwDX24qkEUN70rnia0_TJyKeJEipsF8oyrW4YWyfSWjkqpYo3uB6xE4JHNHbfYfXgPoKkx22z3-3xjqe-kBYrPcXhAgnt0ilgWh-w6bvS68Oy-q_oG7IKv2aLcudIppL4WC8I8YlOC9rcQjp_QpWmtp4ObfujmKBVEfQ77SEt2-EQATwMlyH2L-9OXIlHCm_9b4C=w472-h504-no "CMD Screenshot")
+
